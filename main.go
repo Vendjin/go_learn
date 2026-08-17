@@ -39,11 +39,8 @@ func getBaseCurrency() (string, bool) {
 	for {
 		fmt.Println("Выберите вашу валюту: RUB, EUR, USD")
 		var currency string
-
-		_, err := fmt.Scan(&currency)
-		if err != nil {
-			fmt.Println("Ошибка считывания ввода.")
-		}
+		fmt.Scan(&currency)
+		currency = strings.ToUpper(currency)
 
 		if !checkInputCurrency(currency) {
 			fmt.Printf("Недопустимая валюта: \"%s\".\n", currency)
@@ -62,6 +59,7 @@ func getTargetCurrency(baseCurrency string) (string, bool) {
 		fmt.Printf("Выберите целевую валюту из RUB, EUR, USD, кроме %v:", baseCurrency)
 		var currency string
 		fmt.Scan(&currency)
+		currency = strings.ToUpper(currency)
 
 		if !checkInputCurrency(currency) {
 			fmt.Printf("Недопустимая валюта: \"%s\".\n", currency)
