@@ -68,8 +68,6 @@ func inputNumbers() []int {
 
 func convertInputToArr(input string) ([]int, error) {
 	inputArr := strings.Split(input, ",")
-	fmt.Println(inputArr)
-
 	arr := make([]int, 0, len(inputArr))
 
 	for _, v := range inputArr {
