@@ -5,10 +5,12 @@ import (
 	"strings"
 )
 
-const (
-	usdToEur = 0.87
-	usdToRub = 80.97
-)
+// Курсы относительно USD
+var rates = map[string]float64{
+	"USD": 1,
+	"EUR": 0.87,
+	"RUB": 80.97,
+}
 
 func main() {
 	fmt.Println("===Конвертер валют===")
@@ -97,12 +99,8 @@ func getAmount() (float64, bool) {
 }
 
 func checkInputCurrency(val string) bool {
-	switch strings.ToLower(val) {
-	case "rub", "eur", "usd":
-		return true
-	default:
-		return false
-	}
+	_, ok := rates[strings.ToUpper(val)]
+	return ok
 }
 
 func checkRepeatChoice() bool {
@@ -117,25 +115,6 @@ func checkRepeatChoice() bool {
 }
 
 func calculateCurrency(amount float64, srcCurrency string, targetCurrency string) float64 {
-	var amountInUSD float64
-
-	switch srcCurrency {
-	case "USD":
-		amountInUSD = amount
-	case "EUR":
-		amountInUSD = amount / usdToEur
-	case "RUB":
-		amountInUSD = amount / usdToRub
-	}
-
-	switch targetCurrency {
-	case "USD":
-		return amountInUSD
-	case "EUR":
-		return amountInUSD * usdToEur
-	case "RUB":
-		return amountInUSD * usdToRub
-	default:
-		return 0
-	}
+	amountInUSD := amount / rates[srcCurrency]
+	return amountInUSD * rates[targetCurrency]
 }
